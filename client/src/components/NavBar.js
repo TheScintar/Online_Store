@@ -16,12 +16,13 @@ const NavBar = observer(() => {
     const logOut = () => {
       user.setUser({})
       user.setIsAuth(false)
+      localStorage.setItem("token", null)
     }
 
   return (
     <Navbar bg="dark" data-bs-theme="dark">
           <Container>
-          <NavLink style={{color: 'white', text_decoration: 'none'}} to={SHOP_ROUTE}>КупиДевайс</NavLink>
+          <NavLink style={{color: 'white', text_decoration: 'none'}} to={SHOP_ROUTE}>Онлайн магазин</NavLink>
           {user.isAuth ?
               <Nav className="ml-auto" style={{color: 'white', marginLeft: 'auto'}}>
                   <Button 

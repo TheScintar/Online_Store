@@ -29,6 +29,7 @@ const {user} = useContext(Context)
         }
         user.setUser(data)
         user.setIsAuth(true)
+        localStorage.setItem("auth", true)
         history(SHOP_ROUTE)
     } catch(e) {
         alert(e.response.data.message)
