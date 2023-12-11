@@ -27,7 +27,7 @@ class DeviceController {
 
         return res.json(device)
         } catch(e) {
-            nextTick(ApiError.badRequest(e.message))
+            next(ApiError.badRequest(e.message))
         }
     }
 

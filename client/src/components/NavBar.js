@@ -10,7 +10,8 @@ import { observer } from "mobx-react-lite"
 import { useNavigate } from 'react-router-dom';
 
 const NavBar = observer(() => {
-    const{user} = useContext(Context)
+    const{user, device} = useContext(Context)
+
     const history = useNavigate()
 
     const logOut = () => {
@@ -23,7 +24,7 @@ const NavBar = observer(() => {
   return (
     <Navbar bg="dark" data-bs-theme="dark">
           <Container>
-          <NavLink style={{color: 'white', text_decoration: 'none'}} to={SHOP_ROUTE}>Онлайн магазин</NavLink>
+          <NavLink style={{color: 'white', text_decoration: 'none'}} to={SHOP_ROUTE} onClick={() => {device.setSelectedType(""); device.setSelectedBrand("")}}>Онлайн магазин</NavLink>
           {user.isAuth ?
               <Nav className="ml-auto" style={{color: 'white', marginLeft: 'auto'}}>
                 {user.isRole === 'ADMIN' ?

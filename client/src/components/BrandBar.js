@@ -13,7 +13,7 @@ const BrandBar = observer(() => {
         <ListGroup>
         {device.brands.map(brand =>
             <ListGroupItem
-                style={{cursor: 'pointer'}}
+                style={{cursor: 'pointer', overflow: "hidden"}}
                 active={brand.id === device.selectedBrand.id}
                 key={brand.id}
                 className="p-3"
