@@ -24,11 +24,10 @@ class BasketController {
 
     async removeFromBasket(req,res){
         try {
-            console.log(req.body)
             const {id}  = req.body
             const basket = await BasketDevice.destroy({
                 where: {
-                    id: id
+                    id: id    
                 }
             });
             return res.json(basket);

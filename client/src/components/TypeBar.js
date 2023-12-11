@@ -2,12 +2,12 @@ import { observer } from 'mobx-react-lite'
 import React, { useContext } from 'react'
 import { Context } from '../index';
 import ListGroup from 'react-bootstrap/ListGroup';
-import { Row } from 'react-bootstrap';
+import { Button, Row } from 'react-bootstrap';
 
 const TypeBar = observer(() => {
   const {device} = useContext(Context)
   return (
-    <Row className='mt-3'>
+    <Row className='mt-1'>
       <h2>Тип устройства</h2>
     <ListGroup>
         {device.types.map(type =>
@@ -23,7 +23,14 @@ const TypeBar = observer(() => {
             </ListGroup.Item>
         )}
       </ListGroup>
+      <Button
+                onClick={() => device.setSelectedType("")}
+                className="p-2 mt-3"
+        >
+                Сбросить фильтр
+        </Button>
       </Row>
+      
   )
 });
 

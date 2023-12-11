@@ -4,12 +4,13 @@ import Image from 'react-bootstrap/Image'
 import bigStar from '../assets/bigStar.png'
 import {useParams} from 'react-router-dom'
 import { fetchOneDevice, addToBasket, addRating, fetchIsSetRating, fetchRating } from '../http/deviceAPI'
+import { Context } from '../index'
 
 
 function DevicePage() {
   const [device, setDevice] = useState({info: []})
   const userToken  = localStorage.getItem("token")
-
+  const{user} = useContext(Context)
   
   const {id} = useParams()
 
@@ -18,33 +19,47 @@ function DevicePage() {
 
   useEffect(() => {
     Promise.all([fetchRating(id), fetchOneDevice(id)]).then(([ratingData, deviceData]) => {
-      setDevice({ ...deviceData, rating: ratingData.averageRating });
+      setDevice({...deviceData, rating: ratingData.averageRating});
     });
   }, []);
   
     // ------- Создаём функцию для записи ------- //
     const add = () => {
-      const formData = new FormData()
-      formData.append('deviceId', id)
-      addToBasket(formData).then(data => alert(`Товар ` + device.name + ` был добавлен в вашу корзину!`))
+      if (user.isAuth) 
+      {
+          const formData = new FormData()
+          formData.append('deviceId', id)
+          addToBasket(formData).then(data => alert(`Товар ` + device.name + ` был добавлен в вашу корзину!`))
+      }
+      else  
+      {
+          alert("Вы не авторизованы")
+      }
   }
 
   const clickRating = (index) => {
-    fetchIsSetRating(id, userToken).then(data => {
-      console.log(data)
-        if (data.length > 0) {
-            alert("Вы уже поставили оценку");
-        } else {
-            addRating(index, id).then(data => {
-                alert("Спасибо за оценку");
-                // Обновляем состояние после успешного удаления
-                Promise.all([fetchRating(id), fetchOneDevice(id)]).then(([ratingData, deviceData]) => {
-                  setDevice({ ...deviceData, rating: ratingData.averageRating });
-                });
-            });
-        }
-    });
-};
+    if (user.isAuth) 
+    {
+          fetchIsSetRating(id, userToken).then(data => {
+            console.log(data)
+              if (data.length > 0) {
+                  alert("Вы уже поставили оценку");
+              } else {
+                  addRating(index, id).then(data => {
+                      alert("Спасибо за оценку");
+                      // Обновляем состояние после успешного удаления
+                     Promise.all([fetchRating(id), fetchOneDevice(id)]).then(([ratingData, deviceData]) => {
+                       setDevice({ ...deviceData, rating: ratingData.averageRating });
+                     });
+                  });
+              }
+        });
+    }
+    else
+    {
+          alert("Вы не авторизованы")
+    }
+  }
           
     
 

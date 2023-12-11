@@ -15,8 +15,9 @@ const NavBar = observer(() => {
 
     const logOut = () => {
       user.setUser({})
+      user.setIsUser({})
       user.setIsAuth(false)
-      localStorage.setItem("token", null)
+      localStorage.removeItem('token')
     }
 
   return (
@@ -25,19 +26,26 @@ const NavBar = observer(() => {
           <NavLink style={{color: 'white', text_decoration: 'none'}} to={SHOP_ROUTE}>Онлайн магазин</NavLink>
           {user.isAuth ?
               <Nav className="ml-auto" style={{color: 'white', marginLeft: 'auto'}}>
+                {user.isRole === 'ADMIN' ?
+                
                   <Button 
                   variant={'outline-light'} 
                   onClick={() => history(ADMIN_ROUTE)}
                   >
                     Админ панель
-                  </Button>
+                  </Button> 
+                  :     
+                    null         
+                  }
+                    
                   <Button 
                   variant={'outline-light'} 
                   onClick={() => history(BASKET_ROUTE)}
                   style={{marginLeft: '10px'}}
                   >
                     Корзина
-                  </Button>
+                  </Button> 
+                
                   <Button 
                   variant={'outline-light'} 
                   onClick={() => logOut()}

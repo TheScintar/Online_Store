@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { observer } from 'mobx-react-lite'
-import {ListGroup, ListGroupItem } from 'react-bootstrap'
+import {Button, ListGroup, ListGroupItem } from 'react-bootstrap'
 import Row from 'react-bootstrap/Row'
 import { Context } from '../index';
 
@@ -23,6 +23,12 @@ const BrandBar = observer(() => {
             </ListGroupItem>
         )}
         </ListGroup>
+        <Button
+                className="p-2 mt-3"
+                onClick={() => device.setSelectedBrand("")}
+        >
+               Сбросить фильтр
+        </Button>
     </Row>
   )
 })

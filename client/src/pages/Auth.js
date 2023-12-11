@@ -27,9 +27,9 @@ const {user} = useContext(Context)
         } else {
             data = await registration(email, password);
         }
-        user.setUser(data)
+        user.setUser(data.role)
+        user.setIsUser(data.id) 
         user.setIsAuth(true)
-        localStorage.setItem("auth", true)
         history(SHOP_ROUTE)
     } catch(e) {
         alert(e.response.data.message)

@@ -8,6 +8,17 @@ class TypeController {
         return res.json({type})
     }
 
+    async delete(req, res) {
+        console.log(req.body)
+        const {typeId} = req.body
+        const type = await Type.destroy({
+            where: {
+                id: typeId
+            }
+        });
+        return res.json(type);
+    }
+
     async getAll(req, res) {
         const types = await Type.findAll()
         return res.json(types)
